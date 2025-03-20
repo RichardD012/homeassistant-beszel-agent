@@ -27,7 +27,7 @@ jobs:
           echo "Latest Beszel version: $LATEST_VERSION"
           
           # Get current version from config.yaml
-          CURRENT_VERSION=$(grep version < config.yaml | grep -o '[0-9\.]*')
+          CURRENT_VERSION=$(grep version < beszel-agent/config.yaml | grep -o '[0-9\.]*')
           
           echo "Current config version: $CURRENT_VERSION"
           
@@ -52,10 +52,10 @@ jobs:
           git checkout -b $BRANCH_NAME
           
           # Update the version in config.yaml
-          sed -i "s/version: \"${{ env.CURRENT_VERSION }}\"/version: \"${{ env.LATEST_VERSION }}\"/" config.yaml
+          sed -i "s/version: \"${{ env.CURRENT_VERSION }}\"/version: \"${{ env.LATEST_VERSION }}\"/" beszel-agent/config.yaml
           
           # Commit the change
-          git add config.yaml
+          git add beszel-agent/config.yaml
           git commit -m "Update Beszel version to ${{ env.LATEST_VERSION }}"
           git push origin $BRANCH_NAME
 
