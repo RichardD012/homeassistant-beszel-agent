@@ -1,7 +1,7 @@
 name: "Beszel-Agent"
 description: "Beszel-Agent for Home Assistant"
 url: "https://github.com/RichardD012/homeassistant-beszel-agent"
-version: "0.13.0"
+version: "0.13.1"
 slug: "updated-beszel-agent"
 init: false
 stdin: true
