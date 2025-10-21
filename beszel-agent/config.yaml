@@ -11,8 +11,12 @@ docker_api: true
 host_network: true
 options:
   public_key: null
+  token: null
+  hub_url: null
 schema:
   public_key: str
+  token: str
+  hub_url: str
 arch:
   - aarch64
   - amd64

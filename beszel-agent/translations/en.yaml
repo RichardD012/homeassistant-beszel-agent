@@ -4,3 +4,11 @@ configuration:
     name: Public Key
     description: >-
       Agent Public Key
+  token:
+    name: Token
+    description: >-
+      Hub authentication token (optional)
+  hub_url:
+    name: Hub URL
+    description: >-
+      Beszel hub URL (optional)
