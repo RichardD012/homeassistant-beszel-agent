@@ -1,3 +1,7 @@
+## [0.14.1.1] - 2025-10-21
+
+- Adding ability to handle session connections
+
 ## [0.14.1] - 2025-10-20
 
 - Beszel-Agent 0.14.1
