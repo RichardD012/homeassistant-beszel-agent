@@ -1,7 +1,7 @@
 name: "Beszel-Agent"
 description: "Beszel-Agent for Home Assistant"
 url: "https://github.com/RichardD012/homeassistant-beszel-agent"
-version: "0.17.0.1"
+version: "0.17.0.2"
 slug: "updated-beszel-agent"
 init: false
 stdin: true
@@ -20,7 +20,4 @@ schema:
 arch:
   - aarch64
   - amd64
-  - armhf
-  - armv7
-  - i386
 image: "richardd012/homeassistant-beszel-agent-{arch}"
