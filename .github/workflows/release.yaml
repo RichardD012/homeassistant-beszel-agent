@@ -23,10 +23,35 @@ jobs:
       - name: Check for latest release version
         id: get_version
         run: |
-          BESZEL_AGENT_VERSION=$(curl -s "https://api.github.com/repos/henrygd/beszel/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+          # Fetch the latest release with error handling
+          API_RESPONSE=$(curl -s -w "\n%{http_code}" "https://api.github.com/repos/henrygd/beszel/releases/latest")
+          HTTP_CODE=$(echo "$API_RESPONSE" | tail -n1)
+          API_BODY=$(echo "$API_RESPONSE" | sed '$d')
+
+          # Check if API call was successful
+          if [[ "$HTTP_CODE" != "200" ]]; then
+            echo "ERROR: GitHub API returned status code $HTTP_CODE"
+            echo "Response: $API_BODY"
+            exit 1
+          fi
+
+          # Extract version from tag_name
+          BESZEL_AGENT_VERSION=$(echo "$API_BODY" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+
+          # Validate that we got a non-empty version
+          if [[ -z "$BESZEL_AGENT_VERSION" ]]; then
+            echo "ERROR: Failed to extract version from API response"
+            echo "API Response: $API_BODY"
+            exit 1
+          fi
+
           echo "BESZEL AGENT VERSION: $BESZEL_AGENT_VERSION"
+
+          # Get current version
           CURRENT=$(grep version < ./beszel-agent/config.yaml | grep -o '[0-9\.]*');
-          if [[ "$CURRENT" != "$BESZEL_AGENT_VERSION" ]]; then
+
+          # Only proceed if we have a valid version AND it's different from current
+          if [[ -n "$BESZEL_AGENT_VERSION" && "$CURRENT" != "$BESZEL_AGENT_VERSION" ]]; then
             echo "New version detected: $BESZEL_AGENT_VERSION (old version: $CURRENT)"
             echo VERSION_BUMP=true >> $GITHUB_ENV;
             echo "BESZEL_AGENT_VERSION=$BESZEL_AGENT_VERSION" >> $GITHUB_ENV;
