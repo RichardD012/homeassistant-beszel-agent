@@ -1,3 +1,9 @@
+## [0.18.1.1] - 2026-01-12
+
+### Updated
+
+- Fixing Docker buildfile
+
 ## [0.18.1] - 2026-01-12
 
 ### Updated
