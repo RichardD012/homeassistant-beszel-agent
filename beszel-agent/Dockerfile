@@ -1,6 +1,13 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
+# Install glibc compatibility for Alpine (required for dynamically linked beszel-agent v0.18.1+)
+RUN apk --no-cache add ca-certificates wget && \
+    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r1/glibc-2.35-r1.apk && \
+    apk add --no-cache --force-overwrite glibc-2.35-r1.apk && \
+    rm glibc-2.35-r1.apk
+
 COPY config.yaml /
 RUN grep version < config.yaml | grep -oe '[0-9\.]*' > VERSION && rm config.yaml
 
